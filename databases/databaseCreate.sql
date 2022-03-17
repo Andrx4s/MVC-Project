@@ -2,13 +2,8 @@ CREATE TABLE `users`(
                         `id` INT AUTO_INCREMENT PRIMARY KEY,
                         `name` VARCHAR(128),
                         `login` VARCHAR(128) UNIQUE,
-                        `passsword` VARCHAR(128),
+                        `password` VARCHAR(128),
                         `role` VARCHAR(24) DEFAULT 'user'
-);
-CREATE TABLE `categories`(
-                        `id` INT AUTO_INCREMENT PRIMARY KEY,
-                        `name` VARCHAR(128),
-                        `primary` VARCHAR(24)
 );
 
 CREATE TABLE `posts` (

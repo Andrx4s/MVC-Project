@@ -2,7 +2,6 @@
 
 namespace Controllers;
 
-use Models\Categories;
 use Models\User;
 
 class UserController extends BaseController
@@ -14,68 +13,25 @@ class UserController extends BaseController
 
     public function registerPost()
     {
-        if($_POST['passsword'] != $_POST['passsword_confirmed'])
-            return header('Location: ?error_password');
-        unset($_POST['passsword_confirmed']);
+        $errors = [];
+        if(!isset($_POST['name'])) $errors['name'] = ['Нет поля name'];
+        if(!isset($_POST['login'])) $errors['login'] = ['Нет поля login'];
+        if(!isset($_POST['password'])) $errors['password'] = ['Нет поля password'];
+        if(!isset($_POST['password_confirmed'])) $errors['password_confirmed'] = ['Нет поля password_confirmed'];
+
+        if(empty($_POST['name'])) $errors['name'][] = 'Поле name не заполнено!';
+        if(empty($_POST['login'])) $errors['login'][] = 'Поле login не заполнено!';
+        if(empty($_POST['password'])) $errors['password'][] = 'Поле password не заполнено!';
+        if(empty($_POST['password_confirmed'])) $errors['password_confirmed'][] = 'Поле password_confirmed не заполнено!';
+
+        if($_POST['password'] != $_POST['password_confirmed']) $errors['password'][] = 'Пароли не совпали!';
+
+        if($errors != [])
+            return view('register', $errors);
+
+        unset($_POST['password_confirmed']);
         $user = new User();
         $findUser = $user->create($_POST);
         return var_dump($findUser);
-    }
-    public function login()
-    {
-        return view('login');
-    }
-
-    public function loginpost()
-    {
-        $users = new User();
-        $arr = [
-            ['login', '=', $_POST['login']],
-            ['passsword', '=', $_POST['passsword']]
-        ];
-        $users = $users->where($arr)->get();
-        if(count($users)>0){
-            return var_dump($users);
-        }
-    }
-
-    public function category()
-    {
-        return view('category');
-    }
-
-    public function categorypost()
-    {
-        $categories = new Categories();
-        $findcategories = $categories->create($_POST);
-        return var_dump($findcategories);
-    }
-
-   public function categoryread()
-    {
-        return view('categoryread');
-    }
-
-    public function delete()
-    {
-        if(isset($_POST["id"]))
-        {
-            $conn = new Categories();
-
-            $userid = mysqli_real_escape_string($conn, $_POST["id"]);
-            $sql = "DELETE FROM categories WHERE id = '$userid'";
-            if(mysqli_query($conn, $sql)){
-
-                header("Location: categoryread");
-            } else{
-                echo "Ошибка: " . mysqli_error($conn);
-            }
-            mysqli_close($conn);
-        }
-    }
-
-    public function update()
-    {
-        
     }
 }
