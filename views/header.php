@@ -7,15 +7,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><?= (isset($title) ? $title : 'Главная страница') ?></title>
     <?php
-        $css[] = 'bootstrap.css';
-        $javascript[] = ['src' => 'bootstrap.js'];
+    $css[] = 'bootstrap.css';
+    $javascript[] = ['src' => 'bootstrap.js'];
 
-        if(isset($css))
-            foreach($css as $item)
-                echo "<link rel='stylesheet' href='/assets/css/{$item}'>";
-        if(isset($javascript))
-            foreach($javascript as $item)
-                echo "<script src='/assets/js/{$item['src']}' " . ($item['defer'] ? 'defer' : '' ) . "></script>"
+    if(isset($css))
+        foreach($css as $item)
+            echo "<link rel='stylesheet' href='/assets/css/{$item}'>";
+    if(isset($javascript))
+        foreach($javascript as $item)
+            echo "<script src='/assets/js/{$item['src']}' " . (isset($item['defer']) ? 'defer' : '' ) . "></script>"
     ?>
 </head>
 <body>
