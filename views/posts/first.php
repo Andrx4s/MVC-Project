@@ -17,24 +17,44 @@ $title = "Пост - {$post['name']}";
     <div class="row mt-2">
         <div class="col"></div>
         <div class="col-6 border border-1 p-3">
-            <?php if(has_session('id')): ?>
+            <?php if (has_session('id')): ?>
                 <form action="" method="POST">
                     <div class="mb-3">
                         <label for="inputComment" class="form-label">Комментарий поста:</label>
                         <textarea
-                            name="comment"
+                                name="comment"
                            <?= $isError('comment', true) ?>
                            id="inputComment"
-                            placeholder="Комментарий"
-                            required></textarea>
+                                placeholder="Комментарий"
+                                required></textarea>
                         <?= $isError('comment') ?>
                     </div>
                     <button type="submit" class="btn btn-success mt-1">Отправить комментарий</button>
                 </form>
             <?php else: ?>
-                <div class="alert alert-secondary">Авторизуйтесь, чтобы оставить комментарий <a href="/login">перейти!</a></div>
+                <div class="alert alert-secondary">Авторизуйтесь, чтобы оставить комментарий <a
+                            href="/login">перейти!</a></div>
             <?php endif; ?>
         </div>
         <div class="col"></div>
     </div>
+    <div class="row mt-2">
+        <div class="col"></div>
+        <div class="col-6">
+            <?php foreach ($comments_list->get() as $comment) : ?>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h6 class="card-title">
+                            <?= $comment['name'] ?>
+                        </h6>
+                        <div class="card-text">
+                            <?= $comment['comment'] ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <div class="col"></div>
+    </div>
+
 </div>

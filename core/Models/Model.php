@@ -116,6 +116,8 @@ abstract class Model extends \mysqli
     public function join($table, $compound)
     {
         $this->join_query .= " JOIN `{$table}` ON `{$this->table}`.`{$compound[0]}` = `{$table}`.`{$compound[1]}`";
+
+        return $this;
     }
 
     /**
