@@ -1,32 +1,50 @@
 <?php
-$title = 'Создание постов';
+$title = 'Создание нового поста';
 @include_once __DIR__ . '/../header.php';
 ?>
-<?= ( isset($errors['error_auth'])
-    ? "<div class='alert alert-danger'>Логин и пароль не верный!</div>"
-    : "" )
-?>
-
-<div class="container">
+<div class="container mt-2">
     <div class="row">
         <div class="col"></div>
-        <div class="col-6 border border-1 rounded-2 mt-2 p-2">
-            <form action="" method="POST">
-                <div class="mb-3">
-                    <label for="inputTitle" class="form-label">Заголовок</label>
-                    <input type="text" name="tilte" <?= $isError('title', true) ?> id="inputTitle" placeholder="" required>
-                    <?= $isError('title') ?>
-                </div>
-                <div class="mb-3">
-                    <label for="textBody" class="form-label">Описание</label>
-                    <textarea name="body" id="textBody" <?= $isError('password', true) ?> placeholder="" required></textarea>
-                    <?= $isError('password') ?>
-                </div>
-                <button type="submit" class="btn btn-primary">Создать</button>
-            </form>
+        <div class="col-8">
+            <h2>Создание нового поста</h2>
+            <?php if(isset($success)): ?>
+                <div class="alert alert-success">Запись успешно создана!</div>
+            <?php else: ?>
+                <form action="" method="POST">
+                    <div class="mb-3">
+                        <label for="inputName" class="form-label">Наименование поста:</label>
+                        <input type="text"
+                               name="name"
+                            <?= $isError('name', true) ?>
+                               id="inputName"
+                               placeholder="Укажите наименование поста"
+                               required>
+                        <?= $isError('name') ?>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputKeywords" class="form-label">Ключевые слова:</label>
+                        <input type="text"
+                               name="keywords"
+                            <?= $isError('keywords', true) ?>
+                               id="inputKeywords"
+                               placeholder="Укажите ключевые слова через запятую"
+                               required>
+                        <?= $isError('keywords') ?>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputDescription" class="form-label">Описание поста:</label>
+                        <textarea
+                                name="descriptions"
+                           <?= $isError('descriptions', true) ?>
+                           id="inputDescription"
+                                placeholder="Описание поста"
+                                required></textarea>
+                        <?= $isError('descriptions') ?>
+                    </div>
+                    <button type="submit" class="btn btn-success mt-1">Создать новый пост</button>
+                </form>
+            <?php endif; ?>
         </div>
         <div class="col"></div>
     </div>
 </div>
-
-<?php @include_once __DIR__ . '/../footer.php'; ?>
